@@ -1,0 +1,15 @@
+{
+  "name": "Twitter_Data_Collector",
+  "version": "0.0.0",
+  "authors": [
+    "Sam Lerman <sam.lerman@bryx.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
