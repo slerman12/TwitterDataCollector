@@ -11,10 +11,11 @@ def index():
 
 @app.route('/newJob', methods=['POST'])
 def newJob():
-    data = bounding_boxes.returnBoundingBox(-78.5401367286, -76.18272114, 43.3301514, 42.00027541, "rochester-rules")
 
-    # user = request.get_json()['user']
-    return json.dumps({'status': 'OK', 'rules': data})
+    coordinates = request.get_json()['coordinates']
+    rules = bounding_boxes.returnBoundingBox(coordinates['W'], coordinates['E'],
+                                             coordinates['N'], coordinates['S'], "rules")
+    return json.dumps({'status': 'OK', 'rules': rules})
 
 
 @app.route('/jobStatus', methods=['POST'])
