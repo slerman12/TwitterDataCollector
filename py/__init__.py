@@ -10,23 +10,23 @@ def index():
 
 
 @app.route('/newJob', methods=['POST'])
-def api_articles():
+def newJob():
     data = bounding_boxes.returnBoundingBox(-78.5401367286, -76.18272114, 43.3301514, 42.00027541, "rochester-rules")
 
     # user = request.get_json()['user']
     return json.dumps({'status': 'OK', 'rules': data})
 
 
-# @app.route('/jobStatus', methods=['POST'])
-# def api_articles():
-#     user = request.get_json()['user']
-#     return json.dumps({'status': 'OK', 'user': user})
-#
-#
-# @app.route('/results', methods=['POST'])
-# def api_articles():
-#     user = request.get_json()['user']
-#     return json.dumps({'status': 'OK', 'user': user})
+@app.route('/jobStatus', methods=['POST'])
+def jobStatus():
+    user = request.get_json()['user']
+    return json.dumps({'status': 'OK', 'user': user})
+
+
+@app.route('/results', methods=['POST'])
+def results():
+    user = request.get_json()['user']
+    return json.dumps({'status': 'OK', 'user': user})
 
 
 if __name__ == '__main__':
