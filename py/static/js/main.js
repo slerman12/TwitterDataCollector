@@ -8,17 +8,27 @@ var keywords = {};
 $(function(){
 
     setAuth("henry.kautz@gmail.com", "2Mine4Data");
-    setCoordinates(-78.5401367286, -76.18272114, 43.3301514, 42.00027541);
+    setTitle("Test");
+    setCoordinates(-78.5401367286, -78.18272114, 43.3301514, 43.00027541);
+    setTimeframe(201507010000, 201507010010);
     newJob()
 });
+
+function setAuth(un, pw){
+    username = un;
+    password = pw;
+}
+
+function setTitle(t){
+    title = t;
+}
 
 function setCoordinates(west, east, north, south){
     coordinates = {W: west, E: east, N: north, S: south};
 }
 
-function setAuth(un, pw){
-    username = un;
-    password = pw;
+function setTimeframe(fromDate, toDate){
+    timeframe = {fromDate: fromDate, toDate: toDate};
 }
 
 function newJob(){

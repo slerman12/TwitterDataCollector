@@ -1,5 +1,8 @@
 from flask import Flask, render_template, json, request
 import bounding_boxes
+import AcceptRejectHistoricalJob
+import CreateHistoricalJob
+import MonitorJobStatus
 
 app = Flask(__name__)
 
@@ -12,10 +15,15 @@ def index():
 @app.route('/newJob', methods=['POST'])
 def newJob():
 
+    username = request.get_json()['username']
+    password = request.get_json()['password']
+    title = request.get_json()['title']
+    timeframe = request.get_json()['timeframe']
     coordinates = request.get_json()['coordinates']
     rules = bounding_boxes.returnBoundingBox(coordinates['W'], coordinates['E'],
                                              coordinates['N'], coordinates['S'], "rules")
-    return json.dumps({'status': 'OK', 'rules': rules})
+    createJob = CreateHistoricalJob.post(username, password, timeframe['fromDate'], timeframe['toDate'], title, rules)
+    return json.dumps({'status': 'OK', 'createJob': createJob})
 
 
 @app.route('/jobStatus', methods=['POST'])
