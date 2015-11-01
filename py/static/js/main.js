@@ -11,7 +11,7 @@ $(function(){
     setTitle("Test");
     setCoordinates(-78.5401367286, -78.18272114, 43.3301514, 43.00027541);
     setTimeframe(201507010000, 201507010010);
-    newJob()
+    createJob()
 });
 
 function setAuth(un, pw){
@@ -31,11 +31,27 @@ function setTimeframe(fromDate, toDate){
     timeframe = {fromDate: fromDate, toDate: toDate};
 }
 
-function newJob(){
+function createJob(){
     $.ajax({
-        url: "/newJob",
+        url: "/createJob",
         type: 'POST',
         data: JSON.stringify({username: username, password: password, title: title, coordinates: coordinates, timeframe: timeframe, keywords: keywords}),
+        dataType: 'json',
+        contentType: 'application/json',
+        success: function (data) {
+            acceptRejectJob(data.createJob.jobURL, false);
+        },
+        error: function(){
+
+        }
+    });
+}
+
+function acceptRejectJob(queuedJob, accept){
+    $.ajax({
+        url: "/acceptRejectJob",
+        type: 'POST',
+        data: JSON.stringify({username: username, password: password, queuedJob: queuedJob, accept: accept}),
         dataType: 'json',
         contentType: 'application/json',
         success: function (data) {
@@ -47,11 +63,11 @@ function newJob(){
     });
 }
 
-function jobStatus(username, password, title){
+function jobStatus(username, password, queuedJob){
     $.ajax({
         url: "/jobStatus",
         type: 'POST',
-        data: JSON.stringify({username: username, password: password, title: title}),
+        data: JSON.stringify({username: username, password: password, queuedJob: queuedJob}),
         dataType: 'json',
         contentType: 'application/json',
         success: function (data) {

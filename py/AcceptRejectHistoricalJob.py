@@ -5,13 +5,12 @@ import base64
 import json
 import sys
 
-def post():
+def post(url, UN, PWD, accept):
 
-    url = 'ENTER_HISTORICAL_JOB_URL'
-    UN = 'ENTER_USERNAME'
-    PWD = 'ENTER_PASSWORD'
-
-    choice = 'accept' # Switch to 'reject' to reject the job.
+    if accept:
+        choice = 'accept'  # Switch to 'reject' to reject the job.
+    else:
+        choice = 'reject'
 
     payload = '{"status":"' + choice + '"}'
 
@@ -25,9 +24,6 @@ def post():
     try:
         response = urllib2.urlopen(req)
     except urllib2.HTTPError as e:
-        print e.read()
-    the_page = response.read()
-    return the_page
-
-if __name__ == "__main__":
-    post()
+        return json.load(e)
+    data = json.load(response)
+    return data

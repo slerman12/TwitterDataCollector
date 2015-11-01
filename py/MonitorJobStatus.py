@@ -16,11 +16,8 @@ class RequestWithMethod(urllib2.Request):
         else:
             return urllib2.Request.get_method(self)
 
-if __name__ == "__main__":
 
-    url = 'ENTER_HISTORICAL_JOB_URL'
-    UN = 'ENTER_USERNAME'
-    PWD = 'ENTER_PASSWORD'
+def get(url, UN, PWD):
 
     base64string = base64.encodestring('%s:%s' % (UN, PWD)).replace('\n', '')
 
@@ -31,7 +28,7 @@ if __name__ == "__main__":
     try:
         response = urllib2.urlopen(req)
     except urllib2.HTTPError as e:
-        print e.read()
+        return json.load(e)
 
-    the_page = response.read()
-    print the_page
+    data = json.load(response)
+    return data

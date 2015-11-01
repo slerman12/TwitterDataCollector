@@ -12,8 +12,8 @@ def index():
     return render_template('index.html')
 
 
-@app.route('/newJob', methods=['POST'])
-def newJob():
+@app.route('/createJob', methods=['POST'])
+def createJob():
 
     username = request.get_json()['username']
     password = request.get_json()['password']
@@ -26,10 +26,29 @@ def newJob():
     return json.dumps({'status': 'OK', 'createJob': createJob})
 
 
+@app.route('/acceptRejectJob', methods=['POST'])
+def acceptRejectJob():
+
+    username = request.get_json()['username']
+    password = request.get_json()['password']
+    queuedJob = request.get_json()['queuedJob']
+    accept = request.get_json()['accept']
+
+    acceptRejectJob = AcceptRejectHistoricalJob.post(queuedJob, username, password, accept)
+
+    return json.dumps({'status': 'OK', 'acceptRejectJob': acceptRejectJob})
+
+
 @app.route('/jobStatus', methods=['POST'])
 def jobStatus():
-    user = request.get_json()['user']
-    return json.dumps({'status': 'OK', 'user': user})
+
+    username = request.get_json()['username']
+    password = request.get_json()['password']
+    queuedJob = request.get_json()['queuedJob']
+
+    jobStatus = MonitorJobStatus.get(queuedJob, username, password)
+
+    return json.dumps({'status': 'OK', 'acceptRejectJob': acceptRejectJob})
 
 
 @app.route('/results', methods=['POST'])

@@ -23,6 +23,6 @@ def post(UN, PWD, fromDate, toDate, jobTitle, rules):
     try:
         response = urllib2.urlopen(req)
     except urllib2.HTTPError as e:
-        return e.read()
+        return json.load(e)
     data = json.load(response)
     return data
