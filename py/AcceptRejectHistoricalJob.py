@@ -5,7 +5,7 @@ import base64
 import json
 import sys
 
-def post(url, UN, PWD, accept):
+def put(url, UN, PWD, accept):
 
     if accept:
         choice = 'accept'  # Switch to 'reject' to reject the job.

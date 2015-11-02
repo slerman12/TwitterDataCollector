@@ -31,10 +31,10 @@ def acceptRejectJob():
 
     username = request.get_json()['username']
     password = request.get_json()['password']
-    queuedJob = request.get_json()['queuedJob']
+    url = request.get_json()['url']
     accept = request.get_json()['accept']
 
-    acceptRejectJob = AcceptRejectHistoricalJob.post(queuedJob, username, password, accept)
+    acceptRejectJob = AcceptRejectHistoricalJob.put(url, username, password, accept)
 
     return json.dumps({'status': 'OK', 'acceptRejectJob': acceptRejectJob})
 
@@ -44,17 +44,11 @@ def jobStatus():
 
     username = request.get_json()['username']
     password = request.get_json()['password']
-    queuedJob = request.get_json()['queuedJob']
+    url = request.get_json()['url']
 
-    jobStatus = MonitorJobStatus.get(queuedJob, username, password)
+    jobStatus = MonitorJobStatus.get(url, username, password)
 
-    return json.dumps({'status': 'OK', 'acceptRejectJob': acceptRejectJob})
-
-
-@app.route('/results', methods=['POST'])
-def results():
-    user = request.get_json()['user']
-    return json.dumps({'status': 'OK', 'user': user})
+    return json.dumps({'status': 'OK', 'jobStatus': jobStatus})
 
 
 if __name__ == '__main__':

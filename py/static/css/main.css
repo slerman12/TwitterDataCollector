@@ -1,0 +1,28 @@
+.bigicon {
+    font-size: 67px;
+    color: white;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.icontext {
+    color: white;
+    font-size: 20px;
+}
+
+.bigicondark {
+    font-size: 67px;
+    color: black;
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.icontextdark {
+    color: black;
+    font-size: 20px;
+}
+
+.tile {
+    background: #7C91C7;
+    margin: 15px 0;
+}
