@@ -31,6 +31,7 @@
 .tile {
     background: #c71900;
     margin: 15px 0;
+    border-radius: 5px;
 }
 
 .tile:hover {
@@ -139,4 +140,26 @@ h1 {
 
 .homepage{
     display: none;
+}
+
+.add-job-button{
+    position: fixed;
+    margin: 20px;
+    right: 0;
+    top: 0;
+    z-index: 2;
+}
+
+.add-job-button .fa{
+    font-size: 50px;
+}
+
+.instructions{
+    -webkit-transform: translateZ(0px);
+    margin: 200px 80px;
+    z-index: 1;
+}
+
+.instructions p strong{
+    color: #20a1ff;
 }

@@ -20,7 +20,9 @@ $(function(){
     //    acceptRejectJob(data.createJob.jobURL, false);
     //});
     $('.sign-in-button').click(function(){
+
         loadGUI();
+        setInterval(loadGUI, 22000);
         $('.sign-in').fadeOut("slow", function(){
             $('.homepage').css('display', 'inline')
         });
@@ -52,7 +54,7 @@ function loadGUI(){
 
         }
 
-        $('.dynamicTile').append(tiles);
+        $('.dynamicTile').html(tiles);
         $('.carousel').carousel();
 
         $(".tile").height($(".tile").first().width());
