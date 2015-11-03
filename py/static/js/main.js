@@ -39,9 +39,9 @@ function loadGUI(){
         var jobCount = data.jobStatus.jobs.length;
         var content = [];
 
-        content = [["fa fa-refresh fa-spin",2,3],["fa fa-refresh fa-spin",1,2]];
-
         for(var i = 0; i < jobCount; i++){
+            content = [["fa fa-refresh fa-spin",data.jobStatus.jobs[i].title, data.jobStatus.jobs[i].status],["fa fa-refresh fa-spin",1,2]];
+
             if(i%rowLength === 0 && i !== jobCount){
                 tiles += '<div class="row"><div class="col-sm-'+12/rowLength+' col-xs-12"><div class="tile"><div class="carousel slide" data-ride="carousel"> <div class="carousel-inner"> <div class="item active text-center"> <div> <span class="'+ content[0][0] +' bigicon"></span> </div> <div class="icontext">'+ content[0][1] +' </div> <div class="icontext">'+ content[0][2] +' </div> </div> <div class="item text-center"> <div> <span class="'+ content[1][0] +' bigicon"></span> </div> <div class="icontext">'+ content[1][1] +'</div> <div class="icontext">'+ content[1][2] +' </div> </div> </div> </div> </div></div>';
             }
@@ -51,7 +51,6 @@ function loadGUI(){
             else{
                 tiles += '<div class="col-sm-'+12/rowLength+' col-xs-12"><div class="tile"><div class="carousel slide" data-ride="carousel"> <div class="carousel-inner"> <div class="item active text-center"> <div> <span class="'+ content[0][0] +' bigicon"></span> </div> <div class="icontext">'+ content[0][1] +' </div> <div class="icontext">'+ content[0][2] +' </div> </div> <div class="item text-center"> <div> <span class="'+ content[1][0] +' bigicon"></span> </div> <div class="icontext">'+ content[1][1] +'</div> <div class="icontext">'+ content[1][2] +' </div> </div> </div> </div> </div></div>';
             }
-
         }
 
         $('.dynamicTile').html(tiles);
@@ -72,6 +71,13 @@ function loadGUI(){
             $(".tile").height($(".tile").first().width());
             $(".carousel").height($(".tile").first().width());
             $(".item").height($(".tile").first().width());
+        });
+
+        $('.tile').each(function (i) {
+            $( this ).click(function () {
+                $('#myModal .modal-body').html('<pre><code>' + JSON.stringify(data.jobStatus.jobs[i]) + '</code></pre>');
+                $('#myModal').modal('show');
+            });
         });
 
     });

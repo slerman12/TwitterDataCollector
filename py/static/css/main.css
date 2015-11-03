@@ -154,12 +154,28 @@ h1 {
     font-size: 50px;
 }
 
-.instructions{
-    -webkit-transform: translateZ(0px);
-    margin: 200px 80px;
-    z-index: 1;
+@media only screen
+and (max-width: 1024px) {
+    .instructions {
+        -webkit-transform: translateZ(0px);
+        margin: 200px 0;
+        z-index: 1;
+    }
+}
+
+@media only screen
+and (min-width: 1024px) {
+    .instructions {
+        -webkit-transform: translateZ(0px);
+        margin: 200px 80px;
+        z-index: 1;
+    }
 }
 
 .instructions p strong{
     color: #20a1ff;
+}
+
+.modal{
+    color: #000000;
 }
