@@ -15,21 +15,41 @@ $(function(){
     setTitle("Test");
     setCoordinates(-78.5401367286, -78.18272114, 43.3301514, 43.00027541);
     setTimeframe(201507010000, 201507010010);
+
     //createJob().done(function(data){
     //    acceptRejectJob(data.createJob.jobURL, false);
     //});
+    $('.sign-in-button').click(function(){
+        loadGUI();
+        $('.sign-in').fadeOut("slow", function(){
+            $('.homepage').css('display', 'inline')
+        });
 
+    });
+
+
+});
+
+function loadGUI(){
     jobStatus("https://historical.gnip.com/accounts/" + account + "/jobs.json").done(function(data){
         var tiles = "";
-        jobCount = data.jobStatus.jobs.length;
+        var rowLength = 2;
+        var jobCount = data.jobStatus.jobs.length;
+        var content = [];
+
+        content = [["fa fa-refresh fa-spin",2,3],["fa fa-refresh fa-spin",1,2]];
 
         for(var i = 0; i < jobCount; i++){
-            if(i%2 === 0 && i !== jobCount){
-                tiles += '<div class="row"><div class="col-sm-6 col-xs-12"><div class="tile"><div class="carousel slide" data-ride="carousel"> <div class="carousel-inner"> <div class="item active text-center"> <div> <span class="fa fa-refresh fa-spin bigicon"></span> </div> <div class="icontext">Wait time </div> <div class="icontext">Low </div> </div> <div class="item text-center"> <div> <span class="fa fa-refresh fa-spin bigicon"></span> </div> <div class="icontext">'+ data.jobStatus.jobs[i].title + '</div> <div class="icontext">'+ data.jobStatus.jobs[i].status + ' </div> </div> <div class="item text-center"> <div> <span class="fa fa-refresh fa-spin bigicon"></span> </div> <div class="icontext">Wait time </div> <div class="icontext">Low </div> </div> </div> </div> </div></div>';
+            if(i%rowLength === 0 && i !== jobCount){
+                tiles += '<div class="row"><div class="col-sm-'+12/rowLength+' col-xs-12"><div class="tile"><div class="carousel slide" data-ride="carousel"> <div class="carousel-inner"> <div class="item active content-center"> <div> <span class="'+ content[0][0] +' bigicon"></span> </div> <div class="icontext">'+ content[0][1] +' </div> <div class="icontext">'+ content[0][2] +' </div> </div> <div class="item content-center"> <div> <span class="'+ content[1][0] +' bigicon"></span> </div> <div class="icontext">'+ content[1][1] +'</div> <div class="icontext">'+ content[1][2] +' </div> </div> </div> </div> </div></div>';
             }
-            else {
-                tiles += '<div class="col-sm-6 col-xs-12"><div class="tile"><div class="carousel slide" data-ride="carousel"> <div class="carousel-inner"> <div class="item active text-center"> <div> <span class="fa fa-refresh fa-spin bigicon"></span> </div> <div class="icontext">Wait time </div> <div class="icontext">Low </div> </div> <div class="item text-center"> <div> <span class="fa fa-refresh fa-spin bigicon"></span> </div> <div class="icontext">Wait time </div> <div class="icontext">'+ data.jobStatus.jobs[i].title + ' </div> </div> <div class="item text-center"> <div> <span class="fa fa-refresh fa-spin bigicon"></span> </div> <div class="icontext">'+ data.jobStatus.jobs[i].status + ' </div> <div class="icontext">Low </div> </div> </div> </div> </div></div></div>';
+            else if (i%rowLength === rowLength-1){
+                tiles += '<div class="col-sm-'+12/rowLength+' col-xs-12"><div class="tile"><div class="carousel slide" data-ride="carousel"> <div class="carousel-inner"> <div class="item active content-center"> <div> <span class="'+ content[0][0] +' bigicon"></span> </div> <div class="icontext">'+ content[0][1] +' </div> <div class="icontext">'+ content[0][2] +' </div> </div> <div class="item content-center"> <div> <span class="'+ content[1][0] +' bigicon"></span> </div> <div class="icontext">'+ content[1][1] +'</div> <div class="icontext">'+ content[1][2] +' </div> </div> </div> </div> </div></div></div>';
             }
+            else{
+                tiles += '<div class="col-sm-'+12/rowLength+' col-xs-12"><div class="tile"><div class="carousel slide" data-ride="carousel"> <div class="carousel-inner"> <div class="item active content-center"> <div> <span class="'+ content[0][0] +' bigicon"></span> </div> <div class="icontext">'+ content[0][1] +' </div> <div class="icontext">'+ content[0][2] +' </div> </div> <div class="item content-center"> <div> <span class="'+ content[1][0] +' bigicon"></span> </div> <div class="icontext">'+ content[1][1] +'</div> <div class="icontext">'+ content[1][2] +' </div> </div> </div> </div> </div></div>';
+            }
+
         }
 
         $('.dynamicTile').append(tiles);
@@ -52,13 +72,8 @@ $(function(){
             $(".item").height($(".tile").first().width());
         });
 
-
-
-
-
     });
-
-});
+}
 
 function setAuth(un, pw){
     username = un;
