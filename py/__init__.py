@@ -7,7 +7,7 @@ import MonitorJobStatus
 app = Flask(__name__)
 
 
-@app.route('/')
+@app.route('/gnip')
 def index():
     return render_template('index.html')
 
