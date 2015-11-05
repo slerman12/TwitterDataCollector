@@ -20,7 +20,7 @@ $(function(){
     //    acceptRejectJob(data.createJob.jobURL, false);
     //});
     $('.sign-in-button').click(function(){
-        $('#signinError').html('<i class="fa fa-refresh fa-spin" style="font-size:50px; color: #20a1ff;"></i>');
+        $('#signinError').html('<i class="fa fa-refresh fa-spin" style="margin-top: 10px; font-size:50px; color: #20a1ff;"></i>');
 
         setAuth($('#username').val(), $('#password').val());
 
