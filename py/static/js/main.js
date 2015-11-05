@@ -39,9 +39,21 @@ $(function(){
             $('#signinError').html('Invalid username or password');
         });
 
-
-
     });
+
+    $('#getDataBtn').click(function(){
+
+        $('#getDataBtn').html('<i class="fa fa-refresh fa-spin" style="font-size:50px; color: #20a1ff;"></i>');
+        setTitle($('#title').val());
+        setCoordinates(Number($('#west').val()),Number($('#east').val()),Number($('#north').val()),Number($('#south').val()));
+        setTimeframe(Number($('#from').val()),Number($('#to').val()));
+
+        createJob().done(function(data){
+            acceptIfQuoted(data.createJob.jobURL);
+        });
+    });
+
+
 
     $('#addJobBtn').click(function(){
         $('#addJobModal').modal('show');
@@ -50,23 +62,31 @@ $(function(){
 });
 
 function loadGUI(){
-    jobStatus("https://historical.gnip.com/accounts/" + account + "/jobs.json").done(function(data){
+    return jobStatus("https://historical.gnip.com/accounts/" + account + "/jobs.json").done(function(data){
         var tiles = "";
-        var rowLength = 2;
+        var rowLength = 3;
         var jobCount = data.jobStatus.jobs.length;
         var content = [];
 
         for(var i = 0; i < jobCount; i++){
-            content = [["fa fa-refresh fa-spin",data.jobStatus.jobs[i].title, data.jobStatus.jobs[i].status],["fa fa-refresh fa-spin",1,2]];
-
-            if(i%rowLength === 0 && i !== jobCount){
-                tiles += '<div class="row"><div class="col-sm-'+12/rowLength+' col-xs-12"><div class="tile"><div class="carousel slide" data-ride="carousel"> <div class="carousel-inner"> <div class="item active text-center"> <div> <span class="'+ content[0][0] +' bigicon"></span> </div> <div class="icontext">'+ content[0][1] +' </div> <div class="icontext">'+ content[0][2] +' </div> </div> <div class="item text-center"> <div> <span class="'+ content[1][0] +' bigicon"></span> </div> <div class="icontext">'+ content[1][1] +'</div> <div class="icontext">'+ content[1][2] +' </div> </div> </div> </div> </div></div>';
+            if(data.jobStatus.jobs[i].percentComplete === 100) {
+                content = [['<span class="bigicon">' + data.jobStatus.jobs[i].percentComplete + '%</span>', data.jobStatus.jobs[i].title, data.jobStatus.jobs[i].status], ['<span style="color:green;" class="fa fa-check bigicon"></span>', data.jobStatus.jobs[i].title, data.jobStatus.jobs[i].status]];
             }
-            else if (i%rowLength === rowLength-1){
-                tiles += '<div class="col-sm-'+12/rowLength+' col-xs-12"><div class="tile"><div class="carousel slide" data-ride="carousel"> <div class="carousel-inner"> <div class="item active text-center"> <div> <span class="'+ content[0][0] +' bigicon"></span> </div> <div class="icontext">'+ content[0][1] +' </div> <div class="icontext">'+ content[0][2] +' </div> </div> <div class="item text-center"> <div> <span class="'+ content[1][0] +' bigicon"></span> </div> <div class="icontext">'+ content[1][1] +'</div> <div class="icontext">'+ content[1][2] +' </div> </div> </div> </div> </div></div></div>';
+            else if(data.jobStatus.jobs[i].status === "rejected"){
+                content = [['<span class="bigicon">' + data.jobStatus.jobs[i].percentComplete + '%</span>', data.jobStatus.jobs[i].title, data.jobStatus.jobs[i].status], ['<span style="color:#3b0000;" class="fa fa-times bigicon"></span>', data.jobStatus.jobs[i].title, data.jobStatus.jobs[i].status]];
             }
             else{
-                tiles += '<div class="col-sm-'+12/rowLength+' col-xs-12"><div class="tile"><div class="carousel slide" data-ride="carousel"> <div class="carousel-inner"> <div class="item active text-center"> <div> <span class="'+ content[0][0] +' bigicon"></span> </div> <div class="icontext">'+ content[0][1] +' </div> <div class="icontext">'+ content[0][2] +' </div> </div> <div class="item text-center"> <div> <span class="'+ content[1][0] +' bigicon"></span> </div> <div class="icontext">'+ content[1][1] +'</div> <div class="icontext">'+ content[1][2] +' </div> </div> </div> </div> </div></div>';
+                content = [['<span class="bigicon">' + data.jobStatus.jobs[i].percentComplete + '%</span>', data.jobStatus.jobs[i].title, data.jobStatus.jobs[i].status], ['<span class="fa fa-refresh fa-spin bigicon"></span>', data.jobStatus.jobs[i].title, data.jobStatus.jobs[i].status]];
+            }
+
+            if(i%rowLength === 0 && i !== jobCount){
+                tiles += '<div class="row"><div class="col-sm-'+12/rowLength+' col-xs-12"><div class="tile"><div class="carousel slide" data-ride="carousel"> <div class="carousel-inner"> <div class="item active text-center"> <div>'+ content[0][0] +'</div> <div class="icontext">'+ content[0][1] +' </div> <div class="icontext">'+ content[0][2] +' </div> </div> <div class="item text-center"> <div>'+ content[1][0] +'</div> <div class="icontext">'+ content[1][1] +'</div> <div class="icontext">'+ content[1][2] +' </div> </div> </div> </div> </div></div>';
+            }
+            else if (i%rowLength === rowLength-1){
+                tiles += '<div class="col-sm-'+12/rowLength+' col-xs-12"><div class="tile"><div class="carousel slide" data-ride="carousel"> <div class="carousel-inner"> <div class="item active text-center"> <div>'+ content[0][0] +'</div> <div class="icontext">'+ content[0][1] +' </div> <div class="icontext">'+ content[0][2] +' </div> </div> <div class="item text-center"> <div>'+ content[1][0] +'</div> <div class="icontext">'+ content[1][1] +'</div> <div class="icontext">'+ content[1][2] +' </div> </div> </div> </div> </div></div></div>';
+            }
+            else{
+                tiles += '<div class="col-sm-'+12/rowLength+' col-xs-12"><div class="tile"><div class="carousel slide" data-ride="carousel"> <div class="carousel-inner"> <div class="item active text-center"> <div>'+ content[0][0] +'</div> <div class="icontext">'+ content[0][1] +' </div> <div class="icontext">'+ content[0][2] +' </div> </div> <div class="item text-center"> <div>'+ content[1][0] +'</div> <div class="icontext">'+ content[1][1] +'</div> <div class="icontext">'+ content[1][2] +' </div> </div> </div> </div> </div></div>';
             }
         }
 
@@ -92,12 +112,35 @@ function loadGUI(){
 
         $('.tile').each(function (i) {
             $( this ).click(function () {
-                $('#myModal .modal-body').html('<pre><code>' + JSON.stringify(data.jobStatus.jobs[i]) + '</code></pre>');
+                if(data.jobStatus.jobs[i].percentComplete !== 100) {
+                    $('#myModal .modal-body').html('<pre><code>' + JSON.stringify(data.jobStatus.jobs[i]) + '</code></pre>');
+                }
+                else{
+                    $('#myModal .modal-body').html('<p><strong>Enter the following into your computer\'s command line to download the Twitter data.</strong> Make sure you are in the directory in which you want the files to be downloaded.</p><pre><code>curl -sS -u' + username + ':'+password+' https://historical.gnip.com/accounts/'+ account +'/publishers/twitter/historical/track/jobs/' + data.jobStatus.jobs[i].uuid + '/results.csv | xargs -P 8 -t -n2 curl -o</code></pre>');
+                }
                 $('#myModal').modal('show');
             });
         });
 
     });
+}
+
+function acceptIfQuoted(url){
+
+    jobStatus(url).done(function(data){
+        if(data.jobStatus.status === "quoted"){
+            acceptRejectJob(data.jobStatus.jobURL, true).done(function(){
+                loadGUI().done(function(){
+                    $('#addJobModal').modal('hide');
+                    $('#getDataBtn').html('Get Twitter Data');
+                });
+            });
+        }
+        else{
+            setTimeout(function(){acceptIfQuoted(url);}, 8000);
+        }
+    });
+
 }
 
 function setAuth(un, pw){
