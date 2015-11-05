@@ -20,15 +20,32 @@ $(function(){
     //    acceptRejectJob(data.createJob.jobURL, false);
     //});
     $('.sign-in-button').click(function(){
+        $('#signinError').html('<i class="fa fa-refresh fa-spin" style="font-size:50px; color: #20a1ff;"></i>');
 
-        loadGUI();
-        setInterval(loadGUI, 22000);
-        $('.sign-in').fadeOut("slow", function(){
-            $('.homepage').css('display', 'inline')
+        setAuth($('#username').val(), $('#password').val());
+
+        jobStatus("https://historical.gnip.com/accounts/" + account + "/jobs.json").done(function(data){
+            if (data.jobStatus.status === "error"){
+                $('#signinError').html('Invalid username or password');
+            }
+            else{
+                loadGUI();
+                setInterval(loadGUI, 22000);
+                $('.sign-in').fadeOut("slow", function(){
+                    $('.homepage').css('display', 'inline')
+                });
+            }
+        }).fail(function(){
+            $('#signinError').html('Invalid username or password');
         });
+
+
 
     });
 
+    $('#addJobBtn').click(function(){
+        $('#addJobModal').modal('show');
+    });
 
 });
 

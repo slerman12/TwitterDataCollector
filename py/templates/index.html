@@ -13,7 +13,7 @@
 <div class="container container-full">
     <div class="row">
         <div class="homepage">
-            <button class="add-job-button btn btn-primary"><i class="fa fa-plus"></i></button>
+            <button id="addJobBtn" class="add-job-button btn btn-primary"><i class="fa fa-plus"></i></button>
             <div class="col-xs-6">
                 <h1 class="underline">Open GNIP Jobs</h1>
                 <div class="dynamicTile">
@@ -25,9 +25,59 @@
                         <!-- Modal content-->
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h4 class="modal-title">Job Data (json)</h4>
+                                <h4 class="modal-title">Job Data</h4>
                             </div>
                             <div class="modal-body">
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal fade" id="addJobModal" role="dialog">
+                    <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Job Data</h4>
+                            </div>
+                            <div class="modal-body">
+                                <form role="form">
+                                    <div class="form-group">
+                                        <label for="title">Title:</label>
+                                        <input type="text" class="form-control" id="title">
+                                    </div>
+                                    <div class="form-inline">
+                                        <div class="form-group">
+                                            <label for="west">West</label>
+                                            <input class="form-control" id="west">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="east">East</label>
+                                            <input class="form-control" id="east">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="north">North</label>
+                                            <input class="form-control" id="north">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="south">South</label>
+                                            <input class="form-control" id="south">
+                                        </div>
+                                    </div>
+                                    <div class="form-inline">
+
+                                        <div class="form-group">
+                                            <label for="from">From:</label>
+                                            <input type="text" class="form-control" id="from">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="to">To:</label>
+                                            <input type="text" class="form-control" id="to">
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-default">Submit</button>
+                                </form>
                             </div>
                         </div>
 
@@ -48,8 +98,8 @@
             <div class="account-wall">
                 <i class="profile-img fa fa-twitter"></i>
                 <form class="form-signin">
-                    <input type="text" class="form-control" placeholder="Username" required autofocus>
-                    <input type="password" class="form-control" placeholder="Password" required>
+                    <input id="username" type="text" class="form-control" placeholder="Username" required autofocus>
+                    <input id="password" type="password" class="form-control" placeholder="Password" required>
                     <a class="btn btn-lg btn-primary btn-block sign-in-button">
                         Sign in</a>
                     <!--<label class="checkbox pull-left">-->
@@ -57,6 +107,7 @@
                     <!--Remember me-->
                     <!--</label>-->
                     <!--<a href="#" class="pull-right need-help">Need help? </a><span class="clearfix"></span>-->
+                    <p id="signinError"></p>
                 </form>
             </div>
             <!--<a href="#" class="text-center new-account">Create an account </a>-->
