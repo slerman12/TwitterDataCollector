@@ -42,34 +42,40 @@
                                 <h4 class="modal-title">Job Data</h4>
                             </div>
                             <div class="modal-body">
-                                <form role="form">
-                                    <div class="form-group">
-                                        <label for="title">Title:</label>
-                                        <input type="text" class="form-control" id="title" placeholder="Example: Title">
+                                <form class="form-horizontal" role="form">
+                                    <div class="form-group row">
+                                        <label for="title" class="col-sm-1 control-label">Title</label>
+                                        <div class="col-sm-3">
+                                            <input type="text" class="form-control" id="title" placeholder="Title">
+                                        </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="west">West</label>
-                                        <input class="form-control" id="west" placeholder="Example: -78.5401367286">
+                                    <div class="form-group row">
+                                        <label for="west" class="col-sm-1 control-label">West</label>
+                                        <div class="col-sm-2">
+                                            <input type="text" class="form-control" id="west" placeholder="-78.54">
+                                        </div>
+                                        <label for="east" class="col-sm-1 control-label">East</label>
+                                        <div class="col-sm-2">
+                                            <input type="text" class="form-control" id="east" placeholder="-78.18">
+                                        </div>
+                                        <label for="north" class="col-sm-1 control-label">North</label>
+                                        <div class="col-sm-2">
+                                            <input type="text" class="form-control" id="north" placeholder="43.33">
+                                        </div>
+                                        <label for="south" class="col-sm-1 control-label">South</label>
+                                        <div class="col-sm-2">
+                                            <input type="text" class="form-control" id="south" placeholder="43.01">
+                                        </div>
                                     </div>
-                                    <div class="form-group">
-                                        <label for="east">East</label>
-                                        <input class="form-control" id="east" placeholder="Example: -78.18272114">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="north">North</label>
-                                        <input class="form-control" id="north" placeholder="Example: 43.3301514">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="south">South</label>
-                                        <input class="form-control" id="south" placeholder="Example: 43.00027541">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="from">From:</label>
-                                        <input type="text" class="form-control" id="from" placeholder="Example: 201507010000">
-                                    </div>
-                                    <div class="form-group">
-                                        <label for="to">To:</label>
-                                        <input type="text" class="form-control" id="to" placeholder="Example: 201507010010">
+                                    <div class="form-group row">
+                                        <label for="from" class="col-sm-1 control-label">From</label>
+                                        <div class="col-sm-5">
+                                            <input type="text" class="form-control" id="from" placeholder="201507010000">
+                                        </div>
+                                        <label for="to" class="col-sm-1 control-label">To</label>
+                                        <div class="col-sm-5">
+                                            <input type="text" class="form-control" id="to" placeholder="201507010010">
+                                        </div>
                                     </div>
                                 </form>
                                 <button id="getDataBtn" class="btn btn-default">Get Twitter Data</button>
