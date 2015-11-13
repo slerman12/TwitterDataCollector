@@ -44,7 +44,14 @@ $(function(){
         setTimeframe(Number($('#from').val()),Number($('#to').val()));
 
         createJob().done(function(data){
-            acceptWhenQuoted(data.createJob.jobURL);
+            if(data.createJob.status !== 'error') {
+                acceptWhenQuoted(data.createJob.jobURL);
+            }
+            else{
+                $('#getDataBtn').html('Get Twitter Data');
+                $('#getDataBtn').prop('disabled', false);
+                $('#getDataError').html('<p>Invalid input</p><p>The reason for the error is: ' + JSON.stringify(data.createJob.reason) + '</p>');
+            }
         }).fail(function(){
             $('#getDataBtn').html('Get Twitter Data');
             $('#getDataBtn').prop('disabled', false);
