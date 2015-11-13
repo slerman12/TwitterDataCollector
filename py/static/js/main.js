@@ -10,17 +10,10 @@ $(function(){
 
     $('.dynamicTile').html("");
 
-    setAuth("henry.kautz@gmail.com", "2Mine4Data");
     setAccount("UniversityofRochester");
-    setTitle("Test");
-    setCoordinates(-78.5401367286, -78.18272114, 43.3301514, 43.00027541);
-    setTimeframe(201507010000, 201507010010);
 
-    //createJob().done(function(data){
-    //    acceptRejectJob(data.createJob.jobURL, false);
-    //});
     $('.sign-in-button').click(function(){
-        $('#signinError').html('<i class="fa fa-refresh fa-spin" style="margin-top: 10px; font-size:50px; color: #20a1ff;"></i>');
+        $('#signinError').html('<i class="fa fa-refresh fa-spin" style="font-size:50px; color: #20a1ff;"></i>');
 
         setAuth($('#username').val(), $('#password').val());
 
@@ -44,16 +37,20 @@ $(function(){
     $('#getDataBtn').click(function(){
 
         $('#getDataBtn').html('<i class="fa fa-refresh fa-spin" style="font-size:50px; color: #20a1ff;"></i>');
+        $('#getDataError').html('');
+        $('#getDataBtn').prop('disabled', true);
         setTitle($('#title').val());
         setCoordinates(Number($('#west').val()),Number($('#east').val()),Number($('#north').val()),Number($('#south').val()));
         setTimeframe(Number($('#from').val()),Number($('#to').val()));
 
         createJob().done(function(data){
-            acceptIfQuoted(data.createJob.jobURL);
+            acceptWhenQuoted(data.createJob.jobURL);
+        }).fail(function(){
+            $('#getDataBtn').html('Get Twitter Data');
+            $('#getDataBtn').prop('disabled', false);
+            $('#getDataError').html('Invalid input');
         });
     });
-
-
 
     $('#addJobBtn').click(function(){
         $('#addJobModal').modal('show');
@@ -90,6 +87,8 @@ function loadGUI(){
             }
         }
 
+        $('.dynamicTile').css('min-height',$('.dynamicTile').height());
+
         $('.dynamicTile').html(tiles);
         $('.carousel').carousel();
 
@@ -108,7 +107,12 @@ function loadGUI(){
             $(".tile").height($(".tile").first().width());
             $(".carousel").height($(".tile").first().width());
             $(".item").height($(".tile").first().width());
+            $('.bigicon').css('font-size', 8*$(".tile").first().width()/21);
+            $('.icontext').css('font-size', $(".tile").first().width()/7);
         });
+
+        $('.bigicon').css('font-size', 8*$(".tile").first().width()/21);
+        $('.icontext').css('font-size', $(".tile").first().width()/7);
 
         $('.tile').each(function (i) {
             $( this ).click(function () {
@@ -116,31 +120,13 @@ function loadGUI(){
                     $('#myModal .modal-body').html('<pre><code>' + JSON.stringify(data.jobStatus.jobs[i]) + '</code></pre>');
                 }
                 else{
-                    $('#myModal .modal-body').html('<p><strong>Enter the following into your computer\'s command line to download the Twitter data.</strong> Make sure you are in the directory in which you want the files to be downloaded.</p><pre><code>curl -sS -u' + username + ':'+password+' https://historical.gnip.com/accounts/'+ account +'/publishers/twitter/historical/track/jobs/' + data.jobStatus.jobs[i].uuid + '/results.csv | xargs -P 8 -t -n2 curl -o</code></pre>');
+                    $('#myModal .modal-body').html('<p><strong>Enter the following into your computer\'s command line to download the Twitter data.</strong> Make sure you are in the directory in which you want the files to be downloaded.</p><pre><code>curl -sS -u' + username + ':'+password+' https://historical.gnip.com/accounts/'+ account +'/publishers/twitter/historical/track/jobs/' + data.jobStatus.jobs[i].uuid + '/results.csv | xargs -P 8 -t -n2 curl -o</code></pre><em>You can only download the files once. Afterwards, GNIP deletes them from their servers.</em>');
                 }
                 $('#myModal').modal('show');
             });
         });
 
     });
-}
-
-function acceptIfQuoted(url){
-
-    jobStatus(url).done(function(data){
-        if(data.jobStatus.status === "quoted"){
-            acceptRejectJob(data.jobStatus.jobURL, true).done(function(){
-                loadGUI().done(function(){
-                    $('#addJobModal').modal('hide');
-                    $('#getDataBtn').html('Get Twitter Data');
-                });
-            });
-        }
-        else{
-            setTimeout(function(){acceptIfQuoted(url);}, 8000);
-        }
-    });
-
 }
 
 function setAuth(un, pw){
@@ -192,4 +178,31 @@ function jobStatus(url){
         dataType: 'json',
         contentType: 'application/json'
     });
+}
+
+function acceptWhenQuoted(url){
+
+    jobStatus(url).done(function(data){
+        if(data.jobStatus.status === "quoted"){
+            acceptRejectJob(data.jobStatus.jobURL, true).done(function(){
+                loadGUI().done(function(){
+                    $('#addJobModal').modal('hide');
+                    $('#getDataBtn').html('Get Twitter Data');
+                    $('#getDataBtn').prop('disabled', false);
+                });
+            }).fail(function(){
+                $('#getDataBtn').html('Get Twitter Data');
+                $('#getDataBtn').prop('disabled', false);
+                $('#getDataError').html('Invalid input');
+            });
+        }
+        else{
+            setTimeout(function(){acceptWhenQuoted(url);}, 8000);
+        }
+    }).fail(function(){
+        $('#getDataBtn').html('Get Twitter Data');
+        $('#getDataBtn').prop('disabled', false);
+        $('#getDataError').html('Invalid input');
+    });
+
 }
