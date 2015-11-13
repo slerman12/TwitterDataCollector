@@ -44,8 +44,37 @@ html,body {
 
 h1 {
     font-family: 'trebuchet ms', verdana, arial;
-    font-size:40px;
     color: #20a1ff;
+}
+
+@media only screen
+and (min-width: 800px) {
+    h1 {
+        font-size:40px;
+    }
+}
+
+@media only screen
+and (min-width: 400px)
+and (max-width: 800px){
+    h1 {
+        font-size:25px;
+    }
+}
+
+@media only screen
+and (min-width: 350px)
+and (max-width: 400px){
+    h1 {
+        font-size:20px;
+    }
+}
+
+@media only screen
+and (max-width: 350px) {
+    h1 {
+        font-size:15px;
+    }
 }
 
 /* Custom container */
@@ -115,10 +144,24 @@ h1 {
 .login-title
 {
     color: #20a1ff;
-    font-size: 18px;
     font-weight: 400;
     display: block;
 }
+
+@media only screen
+and (min-width: 400px) {
+    .login-title {
+        font-size: 18px;
+    }
+}
+
+@media only screen
+and (max-width: 400px) {
+    .login-title {
+        font-size:14px;
+    }
+}
+
 .profile-img
 {
     width: 96px;
