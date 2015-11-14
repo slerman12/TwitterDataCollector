@@ -94,7 +94,7 @@ function loadGUI(){
             }
         }
 
-        $('.dynamicTile').css('min-height',$('.dynamicTile').height());
+        $('.dynamicTileContainer').css('min-height',$('.dynamicTile').height());
 
         $('.dynamicTile').html(tiles);
         $('.carousel').carousel();
@@ -116,6 +116,7 @@ function loadGUI(){
             $(".item").height($(".tile").first().width());
             $('.bigicon').css('font-size', 8*$(".tile").first().width()/21);
             $('.icontext').css('font-size', $(".tile").first().width()/7);
+            $('.dynamicTileContainer').css('min-height',$('.dynamicTile').height());
         });
 
         $('.bigicon').css('font-size', 8*$(".tile").first().width()/21);
@@ -123,13 +124,32 @@ function loadGUI(){
 
         $('.tile').each(function (i) {
             $( this ).click(function () {
-                if(data.jobStatus.jobs[i].percentComplete !== 100) {
+                if(data.jobStatus.jobs[i].status === 'quoted'){
+                    $('#myModal .modal-title').html('Job Data');
+                    $('#myModal .modal-body').html('<pre><code>' + JSON.stringify(data.jobStatus.jobs[i]) + '</code></pre><p class="text-center"><strong>This job has been quoted, but not yet accepted.</strong></p><div class="row"><div class="col-sm-3 col-sm-offset-3"><button class="btn btn-success btn-block accept-btn" value="'+ data.jobStatus.jobs[i].jobURL+'">Accept</button></div><div class="col-sm-3"><button class="btn btn-danger btn-block reject-btn" value="'+ data.jobStatus.jobs[i].jobURL+'">Reject</button></div></div>');
+                }
+                else if(data.jobStatus.jobs[i].percentComplete !== 100 || data.jobStatus.jobs[i].status !== "delivered") {
+                    $('#myModal .modal-title').html('Job Data');
                     $('#myModal .modal-body').html('<pre><code>' + JSON.stringify(data.jobStatus.jobs[i]) + '</code></pre>');
                 }
                 else{
+                    $('#myModal .modal-title').html(data.jobStatus.jobs[i].title);
                     $('#myModal .modal-body').html('<p><strong>Enter the following into your computer\'s command line to download the Twitter data.</strong> Make sure you are in the directory in which you want the files to be downloaded.</p><pre><code>curl -sS -u' + username + ':'+password+' https://historical.gnip.com/accounts/'+ account +'/publishers/twitter/historical/track/jobs/' + data.jobStatus.jobs[i].uuid + '/results.csv | xargs -P 8 -t -n2 curl -o</code></pre><em>You can only download the files once. Afterwards, GNIP deletes them from their servers.</em>');
                 }
                 $('#myModal').modal('show');
+
+                $('.accept-btn').click(function(){
+                    $('#myModal').modal('hide');
+                    acceptRejectJob($(this).attr("value"),true);
+                    loadGUI();
+                });
+
+                $('.reject-btn').click(function(){
+                    alert('test');
+                    $('#myModal').modal('hide');
+                    acceptRejectJob($(this).attr("value"),false);
+                    loadGUI();
+                });
             });
         });
 
