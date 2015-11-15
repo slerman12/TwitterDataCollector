@@ -52,41 +52,72 @@
                                 <form class="form-horizontal" role="form">
                                     <div class="form-group row">
                                         <label for="title" class="col-sm-1 control-label">Title</label>
+
                                         <div class="col-sm-3">
                                             <input type="text" class="form-control" id="title" placeholder="Title">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="west" class="col-sm-1 control-label">West</label>
+
                                         <div class="col-sm-2">
                                             <input type="text" class="form-control" id="west" placeholder="-78.54">
                                         </div>
                                         <label for="east" class="col-sm-1 control-label">East</label>
+
                                         <div class="col-sm-2">
                                             <input type="text" class="form-control" id="east" placeholder="-78.18">
                                         </div>
                                         <label for="north" class="col-sm-1 control-label">North</label>
+
                                         <div class="col-sm-2">
                                             <input type="text" class="form-control" id="north" placeholder="43.33">
                                         </div>
                                         <label for="south" class="col-sm-1 control-label">South</label>
+
                                         <div class="col-sm-2">
                                             <input type="text" class="form-control" id="south" placeholder="43.01">
                                         </div>
                                     </div>
                                     <div class="form-group row">
                                         <label for="from" class="col-sm-1 control-label">From</label>
+
                                         <div class="col-sm-5">
-                                            <input type="text" class="form-control" id="from" placeholder="201507010000">
+                                            <input type="text" class="form-control" id="from"
+                                                   placeholder="201507010000">
                                         </div>
                                         <label for="to" class="col-sm-1 control-label">To</label>
+
                                         <div class="col-sm-5">
                                             <input type="text" class="form-control" id="to" placeholder="201507010010">
                                         </div>
                                     </div>
+                                    <div class="form-group row">
+                                        <div class="col-sm-3">
+                                            <button type="button" class="btn btn-default" data-toggle="collapse" data-target="#keywords-panel"><i class="fa fa-plus-circle"></i>  Add Keywords</button>
+                                        </div>
+                                    </div>
+                                    <div id="keywords-panel" class="collapse">
+                                        <div class="form-group row">
+                                            <div class="col-sm-10 col-sm-offset-1">
+                                                <label for="keywords">Keywords</label>
+                                                <textarea class="form-control" rows="5" id="keywords" placeholder="(happy OR party) (holiday OR house) -(birthday OR democratic OR republican)"></textarea>
+                                                <p>You can <strong>AND</strong> keywords with spaces: <code>keyword1 keyword2</code></p>
+                                                <p>You can <strong>OR</strong> keywords with OR: <code>keyword1 OR keyword2</code></p>
+                                                <p>You can <strong>NOT</strong> keywords with a dash: <code>-keyword</code></p>
+                                                <p>You can <strong>group</strong> keywords with parentheses: <code>(happy OR party) (holiday OR house) -(birthday OR democratic OR republican)</code></p>
+                                                <p>You can <strong>exact match</strong> with quotation marks: <code>"keyword1 keyword2"</code></p>
+                                                <p>You can <strong>substring match</strong> with contains: <code>contains:keyword</code>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </form>
-                                <button id="getDataBtn" class="btn btn-default">Get Twitter Data</button>
-                                <p id="getDataError"></p>
+                                <div class="row">
+                                    <div class=" col-sm-4 col-sm-offset-4">
+                                        <button id="getDataBtn" class="btn btn-primary btn-block">Get Twitter Data</button>
+                                    </div>
+                                    <p class="col-sm-8 col-sm-offset-2 text-center" id="getDataError"></p>
+                                </div>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

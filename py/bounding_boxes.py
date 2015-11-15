@@ -135,7 +135,7 @@ def returnBoundingBox(long_west, long_east, lat_north, lat_south, tag):
 
     #Write output.
     #Produce JSON formatted rule set.
-    rules = '['
+    rules = ''
     first = True
     for box in boxes:
         #Build actual Gnip bounding box format
@@ -149,6 +149,5 @@ def returnBoundingBox(long_west, long_east, lat_north, lat_south, tag):
         else:
             rules += ',' + rule
         first = False
-    rules += ']'
 
     return rules

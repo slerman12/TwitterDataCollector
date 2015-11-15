@@ -4,7 +4,7 @@ var account = "";
 var title = "";
 var coordinates = {};
 var timeframe = {};
-var keywords = {};
+var keywords = "";
 
 $(function(){
 
@@ -35,12 +35,13 @@ $(function(){
 
     $('#getDataBtn').click(function(){
 
-        $('#getDataBtn').html('<i class="fa fa-refresh fa-spin" style="font-size:50px; color: #20a1ff;"></i>');
+        $('#getDataBtn').html('<i class="fa fa-refresh fa-spin" style="font-size:50px;"></i>');
         $('#getDataError').html('');
         $('#getDataBtn').prop('disabled', true);
         setTitle($('#title').val());
         setCoordinates(Number($('#west').val()),Number($('#east').val()),Number($('#north').val()),Number($('#south').val()));
         setTimeframe(Number($('#from').val()),Number($('#to').val()));
+        setKeywords($('#keywords').val());
 
         createJob().done(function(data){
             if(data.createJob.status !== 'error') {
@@ -59,6 +60,7 @@ $(function(){
     });
 
     $('#addJobBtn').click(function(){
+        resetFields();
         $('#addJobModal').modal('show');
     });
 
@@ -175,6 +177,26 @@ function setCoordinates(west, east, north, south){
 
 function setTimeframe(fromDate, toDate){
     timeframe = {fromDate: fromDate, toDate: toDate};
+}
+
+function setKeywords(k){
+    keywords = k;
+}
+
+function resetFields(){
+    title = "";
+    coordinates = {};
+    timeframe = {};
+    keywords = "";
+    $('#getDataError').html('');
+    $('#title').val('');
+    $('#west').val('');
+    $('#east').val('');
+    $('#north').val('');
+    $('#south').val('');
+    $('#from').val('');
+    $('#to').val('');
+    $('#keywords').val('');
 }
 
 function createJob(){
