@@ -85,6 +85,9 @@ function loadGUI(){
             else if(data.jobStatus.jobs[i].status === "rejected"){
                 content = [['<span class="bigicon">' + data.jobStatus.jobs[i].percentComplete + '%</span>', data.jobStatus.jobs[i].title, data.jobStatus.jobs[i].status], ['<span style="color:#3b0000;" class="fa fa-times bigicon"></span>', data.jobStatus.jobs[i].title, data.jobStatus.jobs[i].status]];
             }
+            else if(data.jobStatus.jobs[i].status === "quoted" && data.jobStatus.jobs[i].percentComplete === 0){
+                content = [['<span class="bigicon">' + data.jobStatus.jobs[i].percentComplete + '%</span>', data.jobStatus.jobs[i].title, data.jobStatus.jobs[i].status], ['<span style="color:#3b0000;" class="fa fa-cog bigicon"></span>', data.jobStatus.jobs[i].title, data.jobStatus.jobs[i].status]];
+            }
             else{
                 content = [['<span class="bigicon">' + data.jobStatus.jobs[i].percentComplete + '%</span>', data.jobStatus.jobs[i].title, data.jobStatus.jobs[i].status], ['<span class="fa fa-refresh fa-spin bigicon"></span>', data.jobStatus.jobs[i].title, data.jobStatus.jobs[i].status]];
             }
@@ -140,7 +143,7 @@ function loadGUI(){
                 }
                 else{
                     $('#myModal .modal-title').html(data.jobStatus.jobs[i].title);
-                    $('#myModal .modal-body').html('<p><strong>Enter the following into your computer\'s command line to download the Twitter data.</strong> Make sure you are in the directory in which you want the files to be downloaded.</p><pre><code>curl -sS -u' + username + ':'+password+' https://historical.gnip.com/accounts/'+ account +'/publishers/twitter/historical/track/jobs/' + data.jobStatus.jobs[i].uuid + '/results.csv | xargs -P 8 -t -n2 curl -o</code></pre><em>The files are available for download for 15 days from when the job is accepted.</em>');
+                    $('#myModal .modal-body').html('<p><strong>Enter the following into your computer\'s command line to download the Twitter data.</strong> Make sure you are in the directory in which you want the files to be downloaded.</p><pre><code>curl -sS -u' + username + ':'+password+' https://historical.gnip.com/accounts/'+ account +'/publishers/twitter/historical/track/jobs/' + data.jobStatus.jobs[i].uuid + '/results.csv | xargs -P 8 -t -n2 curl -o</code></pre><em>Files are available for download for 15 days from when the job is accepted.</em>');
                 }
                 $('#myModal').modal('show');
 
