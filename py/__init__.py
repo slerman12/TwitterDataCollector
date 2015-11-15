@@ -25,7 +25,7 @@ def createJob():
                                              coordinates['N'], coordinates['S'], keywords, "rules")
 
     createJob = CreateHistoricalJob.post(username, password, timeframe['fromDate'], timeframe['toDate'], title, rules)
-    return json.dumps({'status': 'OK', 'message': 'Success', 'createJob': createJob})
+    return json.dumps({'status': 'OK', 'createJob': createJob})
 
 
 @app.route('/acceptRejectJob', methods=['POST'])
@@ -50,7 +50,7 @@ def jobStatus():
 
     jobStatus = MonitorJobStatus.get(url, username, password)
 
-    return json.dumps({'status': 'OK', 'jobStatus': jobStatus})
+    return json.dumps({'status': 'OK', 'message': 'Success', 'jobStatus': jobStatus})
 
 
 if __name__ == '__main__':
