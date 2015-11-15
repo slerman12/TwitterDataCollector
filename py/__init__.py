@@ -25,7 +25,7 @@ def createJob():
                                              coordinates['N'], coordinates['S'], keywords, "rules")
 
     createJob = CreateHistoricalJob.post(username, password, timeframe['fromDate'], timeframe['toDate'], title, rules)
-    return json.dumps({'status': 'OK', 'createJob': createJob})
+    return json.dumps({'status': 'OK', 'message': 'Success', 'createJob': createJob})
 
 
 @app.route('/acceptRejectJob', methods=['POST'])
