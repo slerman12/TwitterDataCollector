@@ -140,15 +140,16 @@ function loadGUI(){
 
                 $('.accept-btn').click(function(){
                     $('#myModal').modal('hide');
-                    acceptRejectJob($(this).attr("value"),true);
-                    loadGUI();
+                    acceptRejectJob($(this).attr("value"),true).done(function(){
+                        loadGUI();
+                    });
                 });
 
                 $('.reject-btn').click(function(){
-                    alert('test');
                     $('#myModal').modal('hide');
-                    acceptRejectJob($(this).attr("value"),false);
-                    loadGUI();
+                    acceptRejectJob($(this).attr("value"),false).done(function(){
+                        loadGUI();
+                    });
                 });
             });
         });
