@@ -10,7 +10,7 @@ $(function(){
 
     $('.dynamicTile').html("");
 
-    $('.sign-in-button').click(function(){
+    $('.form-signin').submit(function(){
         $('#signinError').html('<i class="fa fa-refresh fa-spin" style="font-size:50px; color: #20a1ff;"></i>');
 
         setAuth($('#username').val(), $('#password').val());
@@ -30,7 +30,7 @@ $(function(){
         }).fail(function(){
             $('#signinError').html('Invalid account, username, or password');
         });
-
+        event.preventDefault();
     });
 
     $('#getDataBtn').click(function(){
@@ -45,12 +45,13 @@ $(function(){
 
         createJob().done(function(data){
             if(data.createJob.status !== 'error') {
+                loadGUI();
                 acceptWhenQuoted(data.createJob.jobURL);
             }
             else{
                 $('#getDataBtn').html('Get Twitter Data');
                 $('#getDataBtn').prop('disabled', false);
-                $('#getDataError').html('<p>Invalid input</p><p>The reason for the error is: ' + JSON.stringify(data.createJob.reason) + '</p>');
+                $('#getDataError').html('<p>Invalid input</p><p><span><h4>The reason for the error is: </h4><pre><code>' + JSON.stringify(data.createJob.reason) + '</code></pre></span></p>');
             }
         }).fail(function(){
             $('#getDataBtn').html('Get Twitter Data');
@@ -72,6 +73,10 @@ function loadGUI(){
         var rowLength = 3;
         var jobCount = data.jobStatus.jobs.length;
         var content = [];
+
+        if(jobCount === 0){
+            tiles = '<div class="row"><div class="col-sm-8"><h3>No open jobs</h3><p>Click the plus button on the top right to create a job.</p></div></div> ';
+        }
 
         for(var i = 0; i < jobCount; i++){
             if(data.jobStatus.jobs[i].percentComplete === 100) {

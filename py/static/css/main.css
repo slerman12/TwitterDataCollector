@@ -235,4 +235,10 @@ and (min-width: 1024px) {
 #getDataError{
     color: red;
     text-align: center;
+    word-wrap: break-word;
+    -ms-word-wrap: break-word;
+}
+
+#getDataError .message{
+    color: #000000;
 }
