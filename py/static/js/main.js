@@ -10,16 +10,15 @@ $(function(){
 
     $('.dynamicTile').html("");
 
-    setAccount("UniversityofRochester");
-
     $('.sign-in-button').click(function(){
         $('#signinError').html('<i class="fa fa-refresh fa-spin" style="font-size:50px; color: #20a1ff;"></i>');
 
         setAuth($('#username').val(), $('#password').val());
+        setAccount($('#account').val());
 
         jobStatus("https://historical.gnip.com/accounts/" + account + "/jobs.json").done(function(data){
             if (data.jobStatus.status === "error"){
-                $('#signinError').html('Invalid username or password');
+                $('#signinError').html('Invalid account, username, or password');
             }
             else{
                 loadGUI();
@@ -29,7 +28,7 @@ $(function(){
                 });
             }
         }).fail(function(){
-            $('#signinError').html('Invalid username or password');
+            $('#signinError').html('Invalid account, username, or password');
         });
 
     });
