@@ -28,7 +28,7 @@ $(function(){
                 });
             }
         }).fail(function(){
-            $('#signinError').html('Invalid account, username, or password');
+            $('#signinError').html('Invalid credentials');
         });
         event.preventDefault();
     });
