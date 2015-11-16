@@ -83,10 +83,10 @@ function loadGUI(){
                 content = [['<span class="bigicon">' + data.jobStatus.jobs[i].percentComplete + '%</span>', data.jobStatus.jobs[i].title, data.jobStatus.jobs[i].status], ['<span style="color:green;" class="fa fa-check bigicon"></span>', data.jobStatus.jobs[i].title, data.jobStatus.jobs[i].status]];
             }
             else if(data.jobStatus.jobs[i].status === "rejected"){
-                content = [['<span class="bigicon">' + data.jobStatus.jobs[i].percentComplete + '%</span>', data.jobStatus.jobs[i].title, data.jobStatus.jobs[i].status], ['<span style="color:#3b0000;" class="fa fa-times bigicon"></span>', data.jobStatus.jobs[i].title, data.jobStatus.jobs[i].status]];
+                content = [['<span class="bigicon">' + data.jobStatus.jobs[i].percentComplete + '%</span>', data.jobStatus.jobs[i].title, data.jobStatus.jobs[i].status], ['<span style="color:#450000;" class="fa fa-times bigicon"></span>', data.jobStatus.jobs[i].title, data.jobStatus.jobs[i].status]];
             }
             else if(data.jobStatus.jobs[i].status === "quoted" && data.jobStatus.jobs[i].percentComplete === 0){
-                content = [['<span class="bigicon">' + data.jobStatus.jobs[i].percentComplete + '%</span>', data.jobStatus.jobs[i].title, data.jobStatus.jobs[i].status], ['<span style="color:#3b0000;" class="fa fa-cog bigicon"></span>', data.jobStatus.jobs[i].title, data.jobStatus.jobs[i].status]];
+                content = [['<span class="bigicon">' + data.jobStatus.jobs[i].percentComplete + '%</span>', data.jobStatus.jobs[i].title, data.jobStatus.jobs[i].status], ['<span style="color:#a2c7ff;" class="fa fa-cog bigicon"></span>', data.jobStatus.jobs[i].title, data.jobStatus.jobs[i].status]];
             }
             else{
                 content = [['<span class="bigicon">' + data.jobStatus.jobs[i].percentComplete + '%</span>', data.jobStatus.jobs[i].title, data.jobStatus.jobs[i].status], ['<span class="fa fa-refresh fa-spin bigicon"></span>', data.jobStatus.jobs[i].title, data.jobStatus.jobs[i].status]];
