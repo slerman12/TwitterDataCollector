@@ -125,11 +125,13 @@ function loadGUI(){
             $(".item").height($(".tile").first().width());
             $('.bigicon').css('font-size', 8*$(".tile").first().width()/21);
             $('.icontext').css('font-size', $(".tile").first().width()/7);
+            $('.icontext').css('height', $(".tile").first().width()/6);
             $('.dynamicTileContainer').css('min-height',$('.dynamicTile').height());
         });
 
         $('.bigicon').css('font-size', 8*$(".tile").first().width()/21);
         $('.icontext').css('font-size', $(".tile").first().width()/7);
+        $('.icontext').css('height', $(".tile").first().width()/6);
 
         $('.tile').each(function (i) {
             $( this ).click(function () {
