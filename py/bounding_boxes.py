@@ -137,13 +137,17 @@ def returnBoundingBox(long_west, long_east, lat_north, lat_south, keywords, tag)
     #Produce JSON formatted rule set.
     rules = '['
     first = True
+    if keywords == None:
+        keywordRule = ''
+    else:
+        keywordRule =  '(' + keywords + ')'
     for box in boxes:
         #Build actual Gnip bounding box format
         rule_syntax = 'bounding_box:[' + str(box[0]) + ' ' + str(box[1]) + ' ' + str(box[2]) + ' ' + str(box[3]) + ']'
         if tag == None:
-            rule = '{"value":"' + rule_syntax + '"}'
+            rule = '{"value":"' + keywordRule + ' ' + rule_syntax + '"}'
         else:
-            rule = '{"value":"(' + keywords + ') ' + rule_syntax + '", "tag":"' + tag + '"}'
+            rule = '{"value":"' + keywordRule + ' ' + rule_syntax + '", "tag":"' + tag + '"}'
         if first:
             rules += rule
         else:
