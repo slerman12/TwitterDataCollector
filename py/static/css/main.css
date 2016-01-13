@@ -176,6 +176,20 @@ and (max-width: 400px) {
     color: #20a1ff;
 }
 
+#help-addon{
+    color: black;
+    cursor: hand;
+    cursor: pointer;
+}
+
+.popover{
+    color: black;
+}
+
+#help-addon .fa{
+    font-size: large;
+}
+
 .sign-in{
     position: absolute;
 }
@@ -185,7 +199,7 @@ and (max-width: 400px) {
 }
 
 .homepage{
-    display: none;
+    visibility: hidden;
 }
 
 .add-job-button{

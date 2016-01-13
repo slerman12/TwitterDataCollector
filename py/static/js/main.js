@@ -5,10 +5,18 @@ var title = "";
 var coordinates = {};
 var timeframe = {};
 var keywords = "";
+var tag = "";
 
 $(function(){
 
     $('.dynamicTile').html("");
+
+    $('[data-toggle="popover"]').popover();
+    $('#help-addon').click(function(){
+        if($('#account').val() === ""){
+            $('#account').val('UniversityofRochester');
+        }
+    });
 
     $('.form-signin').submit(function(){
         $('#signinError').html('<i class="fa fa-refresh fa-spin" style="font-size:50px; color: #20a1ff;"></i>');
@@ -21,11 +29,12 @@ $(function(){
                 $('#signinError').html('Invalid account, username, or password');
             }
             else{
-                loadGUI();
-                setInterval(loadGUI, 22000);
-                $('.sign-in').fadeOut("slow", function(){
-                    $('.homepage').css('display', 'inline')
+                loadGUI().done(function(){
+                    $('.sign-in').fadeOut("slow", function(){
+                        $('.homepage').css('visibility', 'visible')
+                    });
                 });
+                setInterval(loadGUI, 22000);
             }
         }).fail(function(){
             $('#signinError').html('Invalid credentials');
@@ -42,6 +51,7 @@ $(function(){
         setCoordinates(Number($('#west').val()),Number($('#east').val()),Number($('#north').val()),Number($('#south').val()));
         setTimeframe(Number($('#from').val()),Number($('#to').val()));
         setKeywords($('#keywords').val());
+        setTag($('#tag').val());
 
         createJob().done(function(data){
             if(data.createJob.status !== 'error') {
@@ -86,7 +96,7 @@ function loadGUI(){
                 content = [['<span class="bigicon">' + data.jobStatus.jobs[i].percentComplete + '%</span>', data.jobStatus.jobs[i].title, data.jobStatus.jobs[i].status], ['<span style="color:#450000;" class="fa fa-times bigicon"></span>', data.jobStatus.jobs[i].title, data.jobStatus.jobs[i].status]];
             }
             else if(data.jobStatus.jobs[i].status === "quoted" && data.jobStatus.jobs[i].percentComplete === 0){
-                content = [['<span class="bigicon">' + data.jobStatus.jobs[i].percentComplete + '%</span>', data.jobStatus.jobs[i].title, data.jobStatus.jobs[i].status], ['<span style="color:#a2c7ff;" class="fa fa-cog bigicon"></span>', data.jobStatus.jobs[i].title, data.jobStatus.jobs[i].status]];
+                content = [['<span style="color:#a2c7ff;" class="fa fa-cog bigicon"></span>', data.jobStatus.jobs[i].title, data.jobStatus.jobs[i].status], ['<span style="color:#a2c7ff;" class="fa fa-cog bigicon"></span>', data.jobStatus.jobs[i].title, data.jobStatus.jobs[i].status]];
             }
             else{
                 content = [['<span class="bigicon">' + data.jobStatus.jobs[i].percentComplete + '%</span>', data.jobStatus.jobs[i].title, data.jobStatus.jobs[i].status], ['<span class="fa fa-refresh fa-spin bigicon"></span>', data.jobStatus.jobs[i].title, data.jobStatus.jobs[i].status]];
@@ -193,11 +203,16 @@ function setKeywords(k){
     keywords = k;
 }
 
+function setTag(t){
+    tag = t;
+}
+
 function resetFields(){
     title = "";
     coordinates = {};
     timeframe = {};
     keywords = "";
+    tag = "";
     $('#getDataError').html('');
     $('#title').val('');
     $('#west').val('');
@@ -207,13 +222,16 @@ function resetFields(){
     $('#from').val('');
     $('#to').val('');
     $('#keywords').val('');
+    $('#tag').val('');
+    $('#keywords-panel').collapse("hide");
+    $('#tag-panel').collapse("hide");
 }
 
 function createJob(){
     return $.ajax({
         url: "/createJob",
         type: 'POST',
-        data: JSON.stringify({username: username, password: password, title: title, coordinates: coordinates, timeframe: timeframe, keywords: keywords}),
+        data: JSON.stringify({username: username, password: password, title: title, coordinates: coordinates, timeframe: timeframe, keywords: keywords, tag: tag}),
         dataType: 'json',
         contentType: 'application/json'
     });

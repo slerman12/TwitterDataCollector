@@ -21,8 +21,9 @@ def createJob():
     timeframe = request.get_json()['timeframe']
     coordinates = request.get_json()['coordinates']
     keywords = request.get_json()['keywords']
+    tag = request.get_json()['tag']
     rules = bounding_boxes.returnBoundingBox(coordinates['W'], coordinates['E'],
-                                             coordinates['N'], coordinates['S'], keywords, "rules")
+                                             coordinates['N'], coordinates['S'], keywords, tag)
 
     createJob = CreateHistoricalJob.post(username, password, timeframe['fromDate'], timeframe['toDate'], title, rules)
     return json.dumps({'status': 'OK', 'createJob': createJob})

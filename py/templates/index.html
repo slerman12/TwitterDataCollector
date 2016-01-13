@@ -96,6 +96,17 @@
                                         <div class="col-sm-3">
                                             <button type="button" class="btn btn-default" data-toggle="collapse" data-target="#keywords-panel"><i class="fa fa-plus-circle"></i>  Add Keywords</button>
                                         </div>
+                                        <div class="col-sm-3">
+                                            <button type="button" class="btn btn-default" data-toggle="collapse" data-target="#tag-panel"><i class="fa fa-plus-circle"></i>  Add Tag</button>
+                                        </div>
+                                    </div>
+                                    <div id="tag-panel" class="collapse">
+                                        <div class="form-group row">
+                                            <label for="tag" class="col-sm-1 col-sm-offset-1 control-label">Tag</label>
+                                            <div class="col-sm-3">
+                                                <input type="text" class="form-control" id="tag" placeholder="Tag">
+                                            </div>
+                                        </div>
                                     </div>
                                     <div id="keywords-panel" class="collapse">
                                         <div class="form-group row">
@@ -141,7 +152,10 @@
             <div class="account-wall">
                 <i class="profile-img fa fa-twitter"></i>
                 <form class="form-signin">
-                    <input id="account" type="text" class="form-control" placeholder="Account" name="account" required autofocus>
+                    <div class="input-group">
+                        <input id="account" type="text" class="form-control" placeholder="Account" name="account" required autofocus aria-describedby="help-addon">
+                        <span class="input-group-addon" id="help-addon" data-toggle="popover" data-trigger="hover" title="Example:" data-content="UniversityofRochester"><i class="fa fa-question-circle" ></i></span>
+                    </div>
                     <input id="username" type="text" class="form-control" placeholder="Username" required>
                     <input id="password" type="password" class="form-control" placeholder="Password" required>
                     <button type="submit" class="submit btn btn-lg btn-primary btn-block sign-in-button">Sign in</button>

@@ -144,7 +144,7 @@ def returnBoundingBox(long_west, long_east, lat_north, lat_south, keywords, tag)
     for box in boxes:
         #Build actual Gnip bounding box format
         rule_syntax = 'bounding_box:[' + str(box[0]) + ' ' + str(box[1]) + ' ' + str(box[2]) + ' ' + str(box[3]) + ']'
-        if tag == None:
+        if (tag == None) or (tag == ""):
             rule = '{"value":"' + keywordRule + ' ' + rule_syntax + '"}'
         else:
             rule = '{"value":"' + keywordRule + ' ' + rule_syntax + '", "tag":"' + tag + '"}'
